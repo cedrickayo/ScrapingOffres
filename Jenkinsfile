@@ -1,6 +1,8 @@
-def count_lines(file_path):
+def count_lines(file_path){
     data = pd.read_csv(file_path)
     return data.count()
+}
+
 
 
 pipeline {
