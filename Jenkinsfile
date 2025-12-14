@@ -1,9 +1,3 @@
-def count_lines(file_path){
-    data = pd.read_csv(file_path)
-    return data.count()
-}
-
-
 
 pipeline {
   agent any
@@ -62,14 +56,27 @@ pipeline {
     stage('Validation / Tests') {
       steps {
           script {
-            def file_path = "Data/jobs.csv"
-
-            def data = count_lines(file_path)
-
-            assert  "${data}" >=2
-
+            try {
+                sh '$VENV_DIR/bin/python -m pytest -v Test/'
+            } catch (Exception e){
+                currentBuild.result = "FAILURE"
+                error(" Échec execution validation tests: ${e.message} >> logs/log.txt ")
+            }
           }
       }
+    }
+
+    stage('Validation') {
+        steps {
+            sh '''
+                $VENV_DIR/bin/python - << 'EOF'
+                import pandas as pd
+                df = pd.read_csv("Data/jobs.csv")
+                assert len(df) >= 2
+                print("✅ CSV valide")
+                EOF
+            '''
+        }
     }
 
 //     stage('Archive') {
