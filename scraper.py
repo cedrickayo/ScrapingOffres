@@ -175,7 +175,7 @@ def main():
     df.to_csv("Data/jobs.csv", index=False, encoding="utf-8")
 
     print(f"\nFichier jobs.csv généré avec {len(df)} offres d'emploi.")
-    logging.INFO(f"\nFichier jobs.csv généré avec {len(df)} offres d'emploi.")
+    logging.info(f"\nFichier jobs.csv généré avec {len(df)} offres d'emploi.")
 
     if not df.empty:
         print(df.head(10))
