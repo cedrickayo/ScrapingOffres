@@ -7,7 +7,8 @@ file="public/index.html"
 
 def test_count_line():
     data = pd.read_csv(file_path)
-    assert data.count() > 2
+    print(data)
+    assert len(data) > 2
 
 
 def test_verif_table_in_html():
