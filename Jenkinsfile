@@ -69,7 +69,7 @@ pipeline {
     stage('Validation') {
         steps {
             sh '''
-                $VENV_DIR/bin/python - << 'EOF'
+                $VENV_DIR/bin/python << 'EOF'
                 import pandas as pd
                 df = pd.read_csv("Data/jobs.csv")
                 assert len(df) >= 2
