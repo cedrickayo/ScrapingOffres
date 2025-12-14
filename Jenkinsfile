@@ -57,7 +57,7 @@ pipeline {
       steps {
           script {
             try {
-                sh '$VENV_DIR/bin/python -m pytest -v Test/'
+                sh '$VENV_DIR/bin/python -m pytest -v Test/*.py'
             } catch (Exception e){
                 currentBuild.result = "FAILURE"
                 error(" Échec execution validation tests: ${e.message} >> logs/log.txt ")
