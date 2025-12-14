@@ -50,7 +50,7 @@ pipeline {
       steps {
           script {
               try {
-                  sh '$VENV_DIR/bin/python scraper.py Data/jobs.csv public/index.html'
+                  sh '$VENV_DIR/bin/python html_generator.py Data/jobs.csv public/index.html'
               } catch (Exception e){
                   currentBuild.result = "FAILURE"
                   error(" Échec execution de la transformation: ${e.message} >> logs/log.txt ")
@@ -64,7 +64,7 @@ pipeline {
           script {
             def file_path = "Data/jobs.csv"
 
-            def data = count_lines($file_path)
+            def data = count_lines(file_path)
 
             assert  "${data}" >=2
 
