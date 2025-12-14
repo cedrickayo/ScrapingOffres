@@ -75,7 +75,7 @@ pipeline {
                 df = pd.read_csv("Data/jobs.csv")
                 assert len(df) >= 2
                 print("✅ CSV valide")
-                EOF
+            EOF
             '''
         }
     }
