@@ -72,11 +72,25 @@ pipeline {
             try {
                 sh '''
                     pwd
+                    jobs_previous="jobs_previous.csv"
+                    jobs="jobs.csv"
+                    file=ls ./Data/ | grep $jobs_previous
+                    if [ -f $file ];
+                        sha256sum $jobs_previous | awk 'print $1' > jobs_previous_sha
+                        sha256sum $jobs | awk 'print $1' > jobs_sha
+                        if [ $jobs_previous_sha ==  $jobs_sha ];
+                            echo " fichier identique"
+                            currentBuild.result = "SUCCESS"
+                            return
+                        else
+                            cat $jobs >> $jobs_previous
+                    else
+                        echo "le fichier n'est pas"
 
                 '''
             } catch (Exception e){
                 currentBuild.result = "FAILURE"
-                error(" Échec execution validation tests: ${e.message} >> logs/log.txt ")
+                error(" Error stage DetectChanges: ${e.message} >> logs/log.txt ")
             }
           }
       }
