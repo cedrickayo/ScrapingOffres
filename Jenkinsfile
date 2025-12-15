@@ -74,18 +74,20 @@ pipeline {
                     pwd
                     jobs_previous="jobs_previous.csv"
                     jobs="jobs.csv"
-                    file=ls ./Data/ | grep $jobs_previous
-                    if [ -f $file ];
+                    file=$(ls ./Data/ | grep $jobs_previous)
+                    if [ -f "$file" ]; then
                         sha256sum $jobs_previous | awk 'print $1' > jobs_previous_sha
                         sha256sum $jobs | awk 'print $1' > jobs_sha
-                        if [ $jobs_previous_sha ==  $jobs_sha ];
+                        if [ $(cat jobs_previous_sha) == $(cat jobs_sha) ]; then
                             echo " fichier identique"
-                            currentBuild.result = "SUCCESS"
-                            return
+                            exit 0
                         else
+                            echo "🔄 Changements détectés – concaténation"
                             cat $jobs >> $jobs_previous
                     else
                         echo "le fichier n'est pas"
+                        cp "$jobs" "$jobs_previous"
+                    fi
 
                 '''
             } catch (Exception e){
