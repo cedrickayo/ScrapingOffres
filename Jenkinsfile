@@ -76,8 +76,8 @@ pipeline {
                     jobs="Data/jobs.csv"
 
                     if [ -f "$jobs_previous" ]; then
-                        sha256sum "$jobs_previous" | awk 'print $1' > jobs_previous_sha
-                        sha256sum "$jobs" | awk 'print $1' > jobs_sha
+                        sha256sum "$jobs_previous" | awk '{print $1}' > jobs_previous_sha
+                        sha256sum "$jobs" | awk '{print $1}' > jobs_sha
 
                         if [ $(cat jobs_previous_sha) == $(cat jobs_sha) ]; then
                             echo " fichier identique "
