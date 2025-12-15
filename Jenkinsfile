@@ -80,7 +80,7 @@ pipeline {
                         sha256sum $jobs | awk 'print $1' > jobs_sha
 
                         if [ $(cat jobs_previous_sha) == $(cat jobs_sha) ]; then
-                            echo " fichier identique"
+                            echo " fichier identique "
                             exit 0
                         else
                             echo "🔄 Changements détectés – concaténation"
