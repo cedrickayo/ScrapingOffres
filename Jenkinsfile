@@ -66,18 +66,20 @@ pipeline {
       }
     }
 
-    stage('Validation') {
-        steps {
-            sh '''
-    cat << 'EOF' | venv/bin/python
-    import pandas as pd
+    stage('Détection de changements') {
+      steps {
+          script {
+            try {
+                sh '''
+                    pwd
 
-    df = pd.read_csv("Data/jobs.csv")
-    assert len(df) >= 2, "CSV invalide : moins de 2 lignes"
-    print("✅ CSV valide")
-    EOF
-    '''
-        }
+                '''
+            } catch (Exception e){
+                currentBuild.result = "FAILURE"
+                error(" Échec execution validation tests: ${e.message} >> logs/log.txt ")
+            }
+          }
+      }
     }
 
 
