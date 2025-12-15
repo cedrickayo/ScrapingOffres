@@ -85,6 +85,7 @@ pipeline {
                         else
                             echo "🔄 Changements détectés – concaténation"
                             cat $jobs >> $jobs_previous
+                        fi
                     else
                         echo "le fichier n'existe  pas"
                         cp "$jobs" "$jobs_previous"
