@@ -69,16 +69,17 @@ pipeline {
     stage('Validation') {
         steps {
             sh '''
-                cat << 'EOF' |
-                $VENV_DIR/bin/python
-                import pandas as pd
-                df = pd.read_csv("Data/jobs.csv")
-                assert len(df) >= 2
-                print("✅ CSV valide")
+    cat << 'EOF' | venv/bin/python
+    import pandas as pd
 
-            '''
+    df = pd.read_csv("Data/jobs.csv")
+    assert len(df) >= 2, "CSV invalide : moins de 2 lignes"
+    print("✅ CSV valide")
+    EOF
+    '''
         }
     }
+
 
 //     stage('Archive') {
 //       steps {
