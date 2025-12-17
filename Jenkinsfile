@@ -115,7 +115,7 @@ pipeline {
       // pourquoi utiliser le groupe www-data car il a été crée lors de l'installation de nginx et pointe sur le repertoire /var/www avec le user www-data
         sh '''
             whoami
-            scp public/index.html jenkins@DockerVM:/var/www/html/
+            scp public/index.html /var/www/html/
             echo "Déploiement réussie"
         '''
       }
