@@ -47,7 +47,10 @@ def csv_to_html(csv_file_path, html_file_path):
         for row in rows[1:]:
             html_content.append("        <tr>")
             for cell in row:
-                html_content.append(f"            <td>{html.escape(cell)}</td>")
+                if cell.__contains__("http"):
+                    html_content.append(f"            <td><a href={cell}>{html.escape(cell)}</a></td>")
+                else:
+                    html_content.append(f"            <td>{html.escape(cell)}</td>")
             html_content.append("        </tr>")
 
         html_content.extend([
