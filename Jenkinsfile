@@ -108,6 +108,7 @@ pipeline {
     stage('Deploy') {
       steps {
         sh '''
+            whoami
             cp ./public/index.html /var/www/html/
             echo "Déploiement réussie"
         '''
