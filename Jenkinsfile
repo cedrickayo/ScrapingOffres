@@ -105,16 +105,17 @@ pipeline {
 //         archiveArtifacts artifacts: '**/*.csv', allowEmptyArchive: true
 //       }
 //     }
-    stage('Deploy') {
+    stage('Deploy dans nginx local') {
       steps {
       //jenkins ne peut pas ecrire dans /var/www/html car n'a pas les droits sur le dossier html qui est root comme proprieatire, root comme groupe
       //on va modifier le groupe du dossier html par le groupe www-data et laisser le proprieatire root : chown -R root:www-data /var/www/html/
       //on ajoute l'utlisateur jenkins a ce groupe www-data : usermod -aG www-data jenkins
       // on permet au groupe d'ecrire dans le repertoire html : chmod g+w /var/www/html
+      //redemarrer jenkins pour que les modifications soient prises en compte
       // pourquoi utiliser le groupe www-data car il a été crée lors de l'installation de nginx et pointe sur le repertoire /var/www avec le user www-data
         sh '''
             whoami
-            scp public/index.html /var/www/html/
+            scp public/index.html jenkins@DockerVM:/var/www/html/
             echo "Déploiement réussie"
         '''
       }
