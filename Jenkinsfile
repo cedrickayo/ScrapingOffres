@@ -109,7 +109,7 @@ pipeline {
       steps {
         sh '''
             whoami
-            cp ./public/index.html /var/www/html/
+            scp public/index.html root@DockerVM:/var/www/html/
             echo "Déploiement réussie"
         '''
       }
